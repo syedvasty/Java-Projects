@@ -1,0 +1,68 @@
+import javax.swing.JOptionPane;
+
+/*
+ * Author: Sunny Vasty
+ * Description: This will get the input from the
+ * user and will pass the input to Employee class
+ * for verification and then will display the result
+ */
+public class TestApplication {
+
+	public static void main(String[] args)
+	{
+		int counter = 0;
+		
+		String input = JOptionPane.showInputDialog("Enter the number of the employees: ");
+		int noOfEmp =  Integer.parseInt(input);
+		Employee[] listOfEmp = new Employee[noOfEmp];
+	
+		do
+		{
+			String tempName = JOptionPane.showInputDialog("Enter the name of the employee: ");
+			if(tempName.equals("FINISH"))
+			{
+				print(listOfEmp);
+				System.exit(0);
+			}
+			String tempSalary = JOptionPane.showInputDialog("Enter the salary of the employee: ");
+			double tempSalary1 =  Double.parseDouble(tempSalary);
+			
+			System.out.println(tempName);
+			System.out.println(tempSalary1);
+			
+			Employee newEmp = new Employee(tempName, tempSalary1);
+			
+			if(newEmp.verify(tempSalary1) == true)
+			{
+				System.out.println("Salary is valid");
+				listOfEmp[counter] = newEmp;
+			}
+			else
+			{
+				System.out.println("Salary is not valid");
+				//continue;
+			}
+			
+			counter++;
+		}while(counter < noOfEmp);
+		print(listOfEmp);
+		
+		
+	}
+	public static void print(Employee[] listOfEmp)
+	{
+		System.out.println("Employee"+"\t"+"Salary");
+		System.out.println("--------"+"\t"+"------");
+		for(int i =0; i < listOfEmp.length; i++)
+		{
+			if(listOfEmp[i] != null)
+			{
+				System.out.print(listOfEmp[i].name +"\t\t$ "+ listOfEmp[i].salary+"\n");
+			}
+			else
+				continue;
+		}
+		
+	}
+	
+}

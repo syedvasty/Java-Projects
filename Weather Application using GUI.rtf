@@ -1,0 +1,363 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf340
+{\fonttbl\f0\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red127\green0\blue85;\red63\green127\blue95;\red0\green0\blue192;
+\red106\green62\blue62;\red42\green0\blue255;\red100\green100\blue100;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs22 \cf2 import\cf0  java.awt.Color;\
+\cf2 import\cf0  java.awt.Graphics;\
+\cf2 import\cf0  java.awt.GridLayout;\
+\cf2 import\cf0  java.awt.event.ActionEvent;\
+\cf2 import\cf0  java.awt.event.ActionListener;\
+\cf2 import\cf0  java.util.Random;\
+\cf2 import\cf0  javax.swing.JButton;\
+\cf2 import\cf0  javax.swing.JCheckBox;\
+\cf2 import\cf0  javax.swing.JComboBox;\
+\cf2 import\cf0  javax.swing.JFrame;\
+\cf2 import\cf0  javax.swing.JLabel;\
+\cf2 import\cf0  javax.swing.JOptionPane;\
+\cf2 import\cf0  javax.swing.JPanel;\
+\cf2 import\cf0  javax.swing.JTextField;\
+\
+\
+\pard\pardeftab720\partightenfactor0
+\cf3 /*\cf0 \
+\cf3  * @author \ul Sunnyvasty\cf0 \ulnone \
+\cf3  * @version :\cf0 \
+\cf3  * \cf0 \
+\cf3  * Description: This program will use GUI features\cf0 \
+\cf3  * firstly, this will ask the user to enter the name of the location,\cf0 \
+\cf3  * and select a month, and will also give them an option if they \cf0 \
+\cf3  * want to result to be in \ul celcius\ulnone  instead of \ul Fahrenheit\ulnone .\cf0 \
+\cf3  * \cf0 \
+\cf3  * \cf0 \
+\cf3  * \ul Nextly\ulnone , using the location, it will call a function to validate if the location\cf0 \
+\cf3  * is correct, as long as the location does not have any number in it; it will be fine\cf0 \
+\cf3  * and if the location is left empty by the user, it will display an error using\cf0 \
+\cf3  * JpaneDialog BOX\cf0 \
+\cf3  * Same thing will happen for the month, as long as the user selects a month it will run\cf0 \
+\cf3  * if the user leaves it run it will throw an error, again using the JPANE dialog box\cf0 \
+\cf3  * \cf0 \
+\cf3  * \cf0 \
+\cf3  * Next steps is to generate a random number,\cf0 \
+\cf3  * range for the random number will be different for different months.\cf0 \
+\cf3  * \cf0 \
+\cf3  * then it will pass the random number to a function to calculate the \cf0 \
+\cf3  * temperature in FAh, but if the user check the checked box for \ul ceclcius\ulnone  conversion\cf0 \
+\cf3  * then it will pass the \ul fah\ulnone  \ul tem\ulnone  to the \ul celcius\ulnone  function to complete the conversion.\cf0 \
+\cf3  * \cf0 \
+\cf3  * next it will store the \ul temp\ulnone  in a global variable so i could be used as the width of the \ul temp\cf0 \ulnone \
+\cf3  * bar.\cf0 \
+\cf3  * \cf0 \
+\cf3  *\cf0 \
+\cf3  */\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf2 public\cf0  \cf2 class\cf0  Midterm \{\
+	\
+	\cf3 //Public variables\cf0 \
+	\cf2 static\cf0  \cf2 boolean\cf0  \cf4 isPausePaint\cf0  = \cf2 true\cf0 ;\
+	\cf2 public\cf0  \cf2 static\cf0  \cf2 int\cf0  \cf4 widResultFah\cf0 ;\
+	\cf2 public\cf0  \cf2 static\cf0  \cf2 int\cf0  \cf4 widResultCel\cf0 ;\
+	\cf2 public\cf0  \cf2 static\cf0  \cf2 boolean\cf0  \cf4 checkBox\cf0  = \cf2 false\cf0 ;\
+	\cf2 public\cf0  \cf2 static\cf0  String \cf4 monthString\cf0 ;\
+\
+\
+	\cf2 public\cf0  \cf2 static\cf0  \cf2 void\cf0  main(String[] \cf5 args\cf0 ) \{\
+		\
+		\cf3 //Create and populate the panel\cf0 \
+		\cf2 final\cf0  JPanel \cf5 DisplayPanel\cf0  = \cf2 new\cf0  \ul JPanel()\ulnone  \{\
+			\
+			\cf2 public\cf0  \cf2 void\cf0  paintComponent(Graphics \cf5 g\cf0 ) \{\
+				\cf3 //Default for is paint is true\cf0 \
+				\cf3 //It will remain true until the go button is hit\cf0 \
+				\cf2 if\cf0 (\cf4 isPausePaint\cf0  == \cf2 false\cf0 )\
+				\{\
+					\cf3 //Storing the data in a string so it can be used to display using drawString\cf0 \
+					String \cf5 result\cf0  = \cf6 ""\cf0 ;\
+					\cf5 result\cf0  = \cf5 result\cf0  + \cf6 "Average Temperature in "\cf0 +\cf4 monthString\cf0 +\cf6 " is "\cf0 +\cf4 widResultFah\cf0 ;\
+					\
+					\cf3 //If and else statement to display the temperature bar\cf0 \
+					\cf3 //Next four statement will only loop if the check box is NOT checked\cf0 \
+					\cf3 /*\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf3 					 * Each if and else statement has 4 lines\cf0 \
+\cf3 					 * line 1 is a draw string line with a string that includes month and and temperate\cf0 \
+\cf3 					 * line 2 is a line that sets the color for the temperature bar\cf0 \
+\cf3 					 * line 3 sets the width, height for the temperature bar\cf0 \
+\cf3 					 * line 4 displays the temperature bar\cf0 \
+\cf3 					 */\cf0 \
+					\cf2 if\cf0 (\cf4 checkBox\cf0  == \cf2 false\cf0 )\
+					\{\
+						\cf3 //If statement runs if the temperature is less than or equal to 32\cf0 \
+						 \cf2 if\cf0 (\cf4 widResultFah\cf0  <= 32)\
+						 \{\
+							\cf5 g\cf0 .drawString(\cf5 result\cf0 , 0, 130);\
+							\cf5 g\cf0 .setColor(Color.\cf4 cyan\cf0 );\
+							\cf5 g\cf0 .drawRect(0, 140, 396, 10);\
+							\cf5 g\cf0 .fillRect(0, 140, \cf4 widResultFah\cf0  * 4, 10);\
+\
+						 \}\
+						 \cf3 //else if statement runs if the temperate is greater than 32 but less than or \cf0 \
+						 \cf3 // equal to 50\cf0 \
+						 \cf2 else\cf0  \cf2 if\cf0  (\cf4 widResultFah\cf0  > 32 && \cf4 widResultFah\cf0  <=50 )\
+						 \{\
+							 \
+							 \cf5 g\cf0 .drawString(\cf5 result\cf0 , 0, 130);\
+							 \cf5 g\cf0 .setColor(Color.\cf4 green\cf0 );\
+							 \cf5 g\cf0 .drawRect(0, 140, 396, 10);\
+							 \cf5 g\cf0 .fillRect(0, 140, \cf4 widResultFah\cf0  * 4, 10);\
+						 \}\
+						 \
+						 \cf3 //else if statement runs if the temperature is \ul greator\ulnone  than 50 but less than or \cf0 \
+						 \cf3 //Equal to 70\cf0 \
+						 \cf2 else\cf0  \cf2 if\cf0  (\cf4 widResultFah\cf0  > 50 && \cf4 widResultFah\cf0  <=70 )\
+						 \{\
+							 \
+							 \cf5 g\cf0 .drawString(\cf5 result\cf0 , 0, 130);\
+							 \cf5 g\cf0 .setColor(Color.\cf4 orange\cf0 );\
+							 \cf5 g\cf0 .drawRect(0, 140, 396, 10);\
+							 \cf5 g\cf0 .fillRect(0, 140, \cf4 widResultFah\cf0  * 4, 10);\
+						 \}\
+						 \cf3 //else if will run if the temperature is \ul greator\ulnone  than 75\cf0 \
+						 \cf2 else\cf0  \cf2 if\cf0  (\cf4 widResultFah\cf0  > 75 )\
+						 \{\
+							 \
+							 \cf5 g\cf0 .drawString(\cf5 result\cf0 , 0, 130);\
+							 \cf5 g\cf0 .setColor(Color.\cf4 red\cf0 );\
+							 \cf5 g\cf0 .drawRect(0, 140, 396, 10);\
+							 \cf5 g\cf0 .fillRect(0, 140, \cf4 widResultFah\cf0  * 4, 10);\
+						 \}\
+					\}\
+					\cf3 //To display the temperature bar\cf0 \
+					\cf3 //These 4 statement will only run if the check box is Checked.\cf0 \
+					\cf2 else\cf0  \cf2 if\cf0 (\cf4 checkBox\cf0  == \cf2 true\cf0 )\
+					\{\
+						\cf3 //if statement will only run if the the temperature is less than or equal to 0\cf0 \
+						 \cf2 if\cf0 (\cf4 widResultCel\cf0  <= 0)\
+						 \{\
+							 \cf3 //g.setColor(Color.cyan);\cf0 \
+							\cf5 g\cf0 .drawString(\cf5 result\cf0 , 0, 130);\
+							\cf5 g\cf0 .setColor(Color.\cf4 cyan\cf0 );\
+							\cf5 g\cf0 .drawRect(0, 140, 396, 10);\
+							\cf5 g\cf0 .fillRect(0, 140, \cf4 widResultCel\cf0  * 12, 20);\
+							 \
+						 \}\
+						 \cf3 //next else if statement will run if temperature is greater than 0 but less than or equal to 10\cf0 \
+						 \cf2 else\cf0  \cf2 if\cf0  (\cf4 widResultCel\cf0  > 0 && \cf4 widResultCel\cf0  <=10 )\
+						 \{\
+							 \cf5 g\cf0 .drawString(\cf5 result\cf0 , 0, 130);\
+							 \cf5 g\cf0 .setColor(Color.\cf4 green\cf0 );\
+							 \cf5 g\cf0 .drawRect(0, 140, 396, 10);\
+							 \cf5 g\cf0 .fillRect(0, 140, \cf4 widResultCel\cf0  * 12, 20);\
+						 \}\
+						 \cf3 //else if statement will run if temperature is greater than 10 but less than or equal to \cf0 \
+						 \cf3 //21\cf0 \
+						 \cf2 else\cf0  \cf2 if\cf0  (\cf4 widResultCel\cf0  > 10 && \cf4 widResultCel\cf0  <=21 )\
+						 \{\
+							 \cf5 g\cf0 .drawString(\cf5 result\cf0 , 0, 130);\
+							 \cf5 g\cf0 .setColor(Color.\cf4 orange\cf0 );\
+							 \cf5 g\cf0 .drawRect(0, 140, 396, 10);\
+							 \cf5 g\cf0 .fillRect(0, 140, \cf4 widResultCel\cf0  * 12, 20);\
+						 \}\
+						\cf3 //else if statement will run if temperature is greater than 21 \cf0 \
+						 \cf2 else\cf0  \cf2 if\cf0  (\cf4 widResultCel\cf0  > 21 )\
+						 \{\
+							 \cf5 g\cf0 .drawString(\cf5 result\cf0 , 0, 130);\
+							 \cf5 g\cf0 .setColor(Color.\cf4 red\cf0 );\
+							 \cf5 g\cf0 .drawRect(0, 140, 396, 10);\
+							 \cf5 g\cf0 .fillRect(0, 140, \cf4 widResultCel\cf0  * 12, 20);\
+						 \}\
+					\}\
+\
+				\
+				\cf4 isPausePaint\cf0  = \cf2 true\cf0 ;\
+				\
+			\}\
+			\}\
+		\};\
+		\
+		\
+		\cf3 //Setting the Grid Layout\cf0 \
+		\cf5 DisplayPanel\cf0 .setLayout(\cf2 new\cf0  GridLayout(6,1));\
+		\
+		\cf3 //Display the label named location\cf0 \
+		\cf2 final\cf0  JLabel \cf5 location\cf0  =  \cf2 new\cf0  JLabel(\cf6 "Location"\cf0 );\
+		\cf5 DisplayPanel\cf0 .add(\cf5 location\cf0 ); \cf3 //Adding the location to the output panel\cf0 \
+		\
+		\cf3 //\ul Textfield\ulnone  to enter the location\cf0 \
+		\cf2 final\cf0  JTextField  \cf5 locationEnter\cf0  = \cf2 new\cf0  JTextField (\cf6 ""\cf0 );\
+		\cf5 DisplayPanel\cf0 .add(\cf5 locationEnter\cf0 ); \cf3 //Adding the \ul textfield\ulnone  for the user to enter the location\cf0 \
+	\
+		\cf3 //Display the label named month of the year next to the month list\cf0 \
+		\cf2 final\cf0  JLabel \cf5 Month\cf0  =  \cf2 new\cf0  JLabel(\cf6 "Month of the Year"\cf0 ); \cf3 //Label\cf0 \
+		\cf5 DisplayPanel\cf0 .add(\cf5 Month\cf0 ); \cf3 //Adding the label to the \ul displaypanel\cf0 \ulnone \
+		\
+		\cf3 //a list of months\cf0 \
+		\cf2 final\cf0  String[] \cf5 months\cf0  = \{\cf6 ""\cf0 ,\cf6 "January"\cf0 ,\cf6 "February"\cf0 ,\cf6 "March"\cf0 ,\cf6 "April"\cf0 \
+				,\cf6 "May"\cf0 ,\cf6 "June"\cf0 ,\cf6 "July"\cf0 ,\cf6 "August"\cf0 ,\cf6 "September"\cf0 ,\cf6 "October"\cf0 \
+				,\cf6 "November"\cf0 ,\cf6 "December"\cf0 \};\
+		\cf3 //display the list with all the months\cf0 \
+		\cf2 final\cf0  \ul JComboBox\ulnone  \cf5 monthCombo\cf0  = \cf2 \ul \ulc2 new\cf0 \ulc0  JComboBox(\cf5 \ulc5 months\cf0 \ulc0 )\ulnone ; \cf3 //A ComboBox that takes string[] of months as a parameter\cf0 \
+		\cf5 DisplayPanel\cf0 .add(\cf5 monthCombo\cf0 ); \cf3 //Adding to the panel\cf0 \
+		\
+		\
+		\cf3 //empty line to align the output right\cf0 \
+		JLabel \cf5 EmptyLine\cf0  =  \cf2 new\cf0  JLabel(\cf6 ""\cf0 );\
+		\cf5 DisplayPanel\cf0 .add(\cf5 EmptyLine\cf0 );\
+		\
+		\cf3 //Code to display the check box\cf0 \
+		\cf2 final\cf0  JCheckBox \cf5 celciusCheck\cf0  = \cf2 new\cf0  JCheckBox(\cf6 "Show Celcius Temperature"\cf0 );\
+		\cf5 DisplayPanel\cf0 .add(\cf5 celciusCheck\cf0 );\
+		\
+		\cf3 //Adding an empty line to align the output\cf0 \
+		JLabel \cf5 EmptyLine1\cf0  =  \cf2 new\cf0  JLabel(\cf6 ""\cf0 );\
+		\cf5 DisplayPanel\cf0 .add(\cf5 EmptyLine1\cf0 );\
+		\
+		\cf3 //Adding Go button\cf0 \
+		JButton \cf5 GoBtn\cf0  = \cf2 new\cf0  JButton(\cf6 "GO"\cf0 );\
+		\cf5 DisplayPanel\cf0 .add(\cf5 GoBtn\cf0 );\
+		\
+		\cf3 //Empty Line \cf0 \
+		JLabel \cf5 EmptyLine2\cf0  =  \cf2 new\cf0  JLabel(\cf6 ""\cf0 );\
+		\cf5 DisplayPanel\cf0 .add(\cf5 EmptyLine2\cf0 );\
+		\
+	\
+			\cf5 GoBtn\cf0 .addActionListener(\cf2 new\cf0  ActionListener() \{\
+				\cf7 @Override\cf0 \
+				\cf2 public\cf0  \cf2 void\cf0  actionPerformed(ActionEvent \cf5 e\cf0 ) \{\
+					\cf3 //Once the \ul Gobtn\ulnone  is clicked, ActionListener will change the isPausePaint to false\cf0 \
+					\cf4 isPausePaint\cf0  = \cf2 false\cf0 ;\
+					\
+					\cf3 //\ul Val\cf0 \ulnone \
+					checkMonth(\cf5 monthCombo\cf0 );\
+					\
+					\
+					String \cf5 userLocation\cf0  = \cf5 locationEnter\cf0 .getText();\
+					validatingLocation(\cf5 userLocation\cf0 );\
+					\cf5 DisplayPanel\cf0 .repaint(); \cf3 //call to refresh the display\cf0 \
+					\
+					\
+					\cf3 //Calculating Temperature\cf0 \
+					\cf2 double\cf0  \cf5 fahreheit\cf0  = CalculateTemp(\cf5 monthCombo\cf0 );\
+					\cf2 double\cf0  \cf5 celcius\cf0  = convertToCelcius(\cf5 fahreheit\cf0 );\
+					\
+					\cf3 //Checks if the check box is checked \cf0 \
+					\cf3 //If the check box is then it will send the \ul celcius\ulnone  \ul tempreture\ulnone  \cf0 \
+					\cf3 //as a parameter\cf0 \
+					\cf3 //if not it will send the \ul fahrenheit\ulnone  as a parameter\cf0 \
+					\cf2 if\cf0 (\cf5 celciusCheck\cf0 .isSelected())\
+					\{\
+						\cf4 widResultCel\cf0 =(\cf2 int\cf0 ) widthEqualtoSizeOfTempBar(\cf5 celcius\cf0 );\
+						\cf4 checkBox\cf0  = \cf2 true\cf0 ;\
+					\}\
+					\cf2 else\cf0 \
+					\{\
+						\cf4 widResultFah\cf0 =(\cf2 int\cf0 ) widthEqualtoSizeOfTempBar(\cf5 fahreheit\cf0 );\
+					\}\
+					\
+							\
+					\
+				\}\
+				\
+			\});\
+		\
+			\cf3 //Create and set up the window\cf0 \
+			JFrame \cf5 frame\cf0  = \cf2 new\cf0  JFrame(\cf6 "Midterm Project"\cf0 );\
+			\cf5 frame\cf0 .setDefaultCloseOperation(JFrame.\cf4 EXIT_ON_CLOSE\cf0 );\
+	\
+			JPanel \cf5 mainPanel\cf0  = \cf2 new\cf0  JPanel(\cf2 new\cf0  GridLayout(2,1));\
+			\
+			\cf5 mainPanel\cf0 .add(\cf5 DisplayPanel\cf0 );\
+			\
+			\cf3 //Set up the \ul contect\ulnone  Area\cf0 \
+			\cf5 mainPanel\cf0 .setOpaque(\cf2 true\cf0 ); \cf3 //content panes must be opaque\cf0 \
+			\cf5 frame\cf0 .setContentPane(\cf5 mainPanel\cf0 );\
+			\
+			\cf3 //Display the window.\cf0 \
+			\cf5 frame\cf0 .pack();\
+			\cf5 frame\cf0 .setVisible(\cf2 true\cf0 );\
+			\
+				\
+	\}\
+\
+	\cf2 public\cf0  \cf2 static\cf0  \cf2 void\cf0  validatingLocation(String \cf5 Location\cf0 )\
+	\{\
+		\cf3 //Checks if the location is empty \cf0 \
+		\cf2 if\cf0  (\cf5 Location\cf0 .equals(\cf6 ""\cf0 ))\
+			\{\
+				JOptionPane.showMessageDialog(\cf2 null\cf0 , \cf6 "Location cant be empty"\cf0 );\
+			\}\
+		\cf3 //checks if the location is contain all alphabets\cf0 \
+		\cf2 else\cf0  \
+		\{\
+			\cf2 for\cf0 (\cf2 int\cf0  \cf5 i\cf0  =0; \cf5 i\cf0  <\cf5 Location\cf0 .length(); \cf5 i\cf0 ++)\
+			\{\
+				\cf2 char\cf0  \cf5 c\cf0  = \cf5 Location\cf0 .charAt(\cf5 i\cf0 );\
+				\cf2 boolean\cf0  \cf5 alphabet\cf0  = Character.isAlphabetic(\cf5 c\cf0 );\
+				\cf2 if\cf0 (!\cf5 alphabet\cf0 )\
+				\{\
+					JOptionPane.showMessageDialog(\cf2 null\cf0 , \cf6 "Invalid Location"\cf0 );\
+				\}\
+			\}\
+		\}\
+		\
+	\}\
+	\cf2 public\cf0  \cf2 static\cf0  \cf2 void\cf0  checkMonth( \ul JComboBox\ulnone  \cf5 monthCombo\cf0 )\
+		\{\
+			\cf2 if\cf0 (\cf5 monthCombo\cf0 .getSelectedItem().equals(\cf6 ""\cf0 ))\
+				\{\
+					JOptionPane.showMessageDialog(\cf2 null\cf0 , \cf6 "Select a Month, and Try Again"\cf0 );\
+				\}\
+			\cf2 else\cf0 \
+				\cf4 monthString\cf0  = (String) \cf5 monthCombo\cf0 .getSelectedItem();\
+		\}\
+	\cf3 //calculating temperature using random number \ul gen\cf0 \ulnone \
+	\cf2 public\cf0  \cf2 static\cf0  \cf2 double\cf0  CalculateTemp(\ul JComboBox\ulnone  \cf5 monthCombo\cf0 )\
+		\{\
+			\cf2 if\cf0 (\cf5 monthCombo\cf0 .getSelectedItem().equals(\cf6 "October"\cf0 ) || \cf5 monthCombo\cf0 .getSelectedItem().equals(\cf6 "November"\cf0 )\
+					|| \cf5 monthCombo\cf0 .getSelectedItem().equals(\cf6 "December"\cf0 )|| \cf5 monthCombo\cf0 .getSelectedItem().equals(\cf6 "January"\cf0 )\
+					|| \cf5 monthCombo\cf0 .getSelectedItem().equals(\cf6 "February"\cf0 )|| \cf5 monthCombo\cf0 .getSelectedItem().equals(\cf6 "March"\cf0 ))\
+				\{\
+					\cf2 double\cf0  \cf5 temp\cf0 ;\
+					Random \cf5 random\cf0  = \cf2 new\cf0  Random();\
+					\cf5 temp\cf0  = \cf5 random\cf0 .nextInt((50-0)+1);\
+					\cf3 //JOptionPane.showMessageDialog(null, +\ul temp\ulnone );\cf0 \
+					\
+					\cf2 return\cf0  \cf5 temp\cf0 ;\
+				\}\
+			\cf2 else\cf0  \cf2 if\cf0 (\cf5 monthCombo\cf0 .getSelectedItem().equals(\cf6 "April"\cf0 ) || \cf5 monthCombo\cf0 .getSelectedItem().equals(\cf6 "May"\cf0 )\
+					|| \cf5 monthCombo\cf0 .getSelectedItem().equals(\cf6 "June"\cf0 )|| \cf5 monthCombo\cf0 .getSelectedItem().equals(\cf6 "July"\cf0 )\
+					|| \cf5 monthCombo\cf0 .getSelectedItem().equals(\cf6 "August"\cf0 )|| \cf5 monthCombo\cf0 .getSelectedItem().equals(\cf6 "September"\cf0 ))\
+				\{\
+					\cf2 double\cf0  \cf5 temp\cf0 ;\
+					Random \cf5 random\cf0  = \cf2 new\cf0  Random();\
+					\cf5 temp\cf0  = \cf5 random\cf0 .nextInt((100-50)+1)+50;\
+					\
+					\cf2 return\cf0  \cf5 temp\cf0 ;\
+				\}\
+				\cf2 return\cf0  0;\
+		\}\
+	\cf3 //taking \ul fah\ulnone  \ul temp\ulnone  as a parameter\cf0 \
+	\cf3 //converting the \ul temp\ulnone  to \ul celcius\cf0 \ulnone \
+	\cf2 public\cf0  \cf2 static\cf0  \cf2 double\cf0  convertToCelcius(\cf2 double\cf0  \cf5 fahrenheit\cf0 )\
+		\{\
+			\cf2 double\cf0  \cf5 celcius\cf0  = 5 * (\cf5 fahrenheit\cf0  - 32) / 9;\
+			\
+			\cf2 return\cf0  \cf5 celcius\cf0 ;\
+		\}\
+	\cf3 //setting the \ul temp\ulnone  equals to width\cf0 \
+	\cf2 public\cf0  \cf2 static\cf0  \cf2 double\cf0  widthEqualtoSizeOfTempBar(\cf2 double\cf0  \cf5 temp\cf0 )\
+		\{\
+			\
+			\cf3 //System.out.println("Inside Get Width Function" +\ul temp\ulnone );\cf0 \
+			\cf2 return\cf0  \cf5 temp\cf0 ;\
+		\
+		\}\
+	\
+	\cf3 //Add additional methods here\cf0 \
+	\
+\
+\}\
+}

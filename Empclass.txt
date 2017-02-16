@@ -1,0 +1,52 @@
+/*
+ * Author: Sunny Vasty
+ * Description: This is an object class, will get the data
+ * from the test class and will store it in the class variables
+ */
+class Employee {
+
+	String name;
+	double salary;
+	boolean isValid = false;
+	
+	//default constructor
+	Employee()
+	{
+		
+	}
+	
+	//constructor with attributes
+	Employee(String EmployeeName, double EmplpoyeeSalary)
+	{
+		this.name = EmployeeName;
+		this.salary = EmplpoyeeSalary;
+	}
+	
+	public void setName(String EmployeeName)
+	{
+		this.name = EmployeeName;
+	}
+	public String getName()
+	{
+		return name;
+	}
+	
+	public void setSalary(double EmplpoyeeSalary)
+	{
+		this.salary = EmplpoyeeSalary;
+	}
+	public double getSalary()
+	{
+		return salary;
+	}
+	
+	boolean verify(double EmployeeSalary)
+	{
+		if(EmployeeSalary >= 1000 && EmployeeSalary <= 99999)
+		{
+			isValid = true;
+		}
+		return isValid;
+	}
+	
+}

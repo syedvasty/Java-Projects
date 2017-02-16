@@ -1,0 +1,154 @@
+import java.awt.GridLayout;
+import java.util.Arrays;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+/*
+ * CIS 2571-002
+ * Author: Syed Vasty(Sunny)
+ * 
+ * @Version: 07/03/2016
+ * Description: This Program will overload two methods
+ * finds the min, max, and average using arrays.
+ * 
+ * 
+ */
+
+public class Lab6 {
+
+	private static final double Average = 0;
+	public static void main(String[] args) {
+		
+		
+		String Input =JOptionPane.showInputDialog("Enter Number of Students");
+		int noOfStudents = Integer.parseInt(Input);
+		
+		if(noOfStudents > 25)
+		{
+			JOptionPane.showMessageDialog(null, "Invalid Choice!!");
+		}
+		
+		int[] gradeArray = new int [noOfStudents];
+		String[] studentNames = new String [noOfStudents];
+		
+		
+		for(int i = 0; i < gradeArray.length; i++)
+		{
+			studentNames[i] = JOptionPane.showInputDialog("Enter the Name of Student no: " +(i+1));
+			gradeArray[i] = Integer.parseInt(JOptionPane.showInputDialog("Enter the grade for Student no: " +(i+1)));
+		}
+		double avgResult = average(noOfStudents, gradeArray);
+		int maxResult = max(noOfStudents, gradeArray);
+		int minResult = min(noOfStudents, gradeArray);
+		showOutput(avgResult,noOfStudents, maxResult, minResult,gradeArray,studentNames);
+		
+		
+	}
+	public static double average(int numberOfStudents, int[] gradesArray)
+	{
+		double sum=0;
+		for(int i =0; i < numberOfStudents; i++) 
+		{
+			sum = sum + gradesArray[i];
+		}
+		double Average = sum / numberOfStudents;
+		//System.out.print(Average);
+		return Average;
+	}
+	public static int max(int numberOfStudents, int[] gradesArray)
+	{
+		int max = gradesArray[0];
+		for(int i =0; i < numberOfStudents; i++) 
+		{
+			if(gradesArray[i] > max)
+			{
+				max = gradesArray[i];
+				
+				return max;
+			}
+		}
+		
+		return max;
+
+	}
+	public static int min(int numberOfStudents, int[] gradesArray)
+	{
+		int max = gradesArray[0];
+		for(int i =0; i < numberOfStudents; i++) 
+		{
+			if(gradesArray[i] < max)
+			{
+				max = gradesArray[i];
+				
+				return max;
+			}
+		}
+		
+		return max;
+		
+	}
+	public static void showOutput(double avg, int noStudents, int max, int min, int[] grades, String[] names)
+	{
+		final JPanel panel = new JPanel (new GridLayout(3,2));
+		
+		String display = "";
+		for(int i =0; i < noStudents; i++) 
+		{
+			display = display +"Student "+(i+1)+" :"+ names[i] +" ,"+" grade: " +grades[i]
+					+"\n";
+		}
+
+		JOptionPane.showMessageDialog(panel,  "Number of Students: "+noStudents +"\n------------ \n" +display
+				+"\n------------ \n"+"\nThe Average Grade is : " +avg +"\nThe Max Grade is : " +max +"\nThe Min Grade is: " +min );
+	}
+	
+	
+	
+	public static double average(int grade, int grade2, int grade3)
+	{
+		double avgCalc = ((grade + grade2 + grade3)/3.0);
+		return avgCalc;	
+	}
+	public static int max(int grade, int grade2, int grade3)
+	{
+		int maxCalc = 0;
+		if(grade < grade2 && grade > grade3)
+		{
+			maxCalc = grade2;
+		}
+		else if(grade > grade2 && grade2 < grade3)
+		{
+			maxCalc = grade;
+		}
+		else if(grade < grade2 && grade < grade3)
+		{
+			maxCalc = grade3;
+		}
+			return maxCalc;
+	}
+	public static int min(int grade, int grade2, int grade3)
+	{
+		int minCalc = 0;
+		if(grade < grade2 && grade > grade3)
+		{
+			minCalc = grade3;
+		}
+		else if(grade > grade2 && grade2 < grade3)
+		{
+			minCalc = grade3;
+		}
+		else if(grade < grade2 && grade < grade3)
+		{
+			minCalc = grade;
+		}
+			return minCalc;
+	}
+	public static void showOutput(int students, double avg, int max, int min)
+	{
+		final JPanel panel = new JPanel(new GridLayout(3,2));
+		JOptionPane.showMessageDialog(panel, "Number of Students: "+students + "\n" +"The Average grade is : " +avg 
+				+"\nThe Max Grade is : " +max +"\nThe min Grade is : " +min);
+	}
+
+}
